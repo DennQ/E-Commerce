@@ -1,4 +1,4 @@
-function renderBooks() {
+function renderBooks(filter) {
   const booksWrapper = document.querySelector('.books');
 
   const books = getBooks();
@@ -26,14 +26,20 @@ function renderBooks() {
       ${ratingsHTML(book.rating)}
     </div>
     <div class="book__price">
-      <span>${book.originalPrice.toFixed(2)}PHP</span> 
+      ${priceHTML(book.originalPrice, book.salePrice)}
     </div>
   </div>`;
   })
   .join("");
-  console.log(booksHTML)
 
   booksWrapper.innerHTML = booksHTML;
+}
+
+function priceHTML(originalPrice, salePrice) {
+  if (!salePrice) {
+    return `${originalPrice.toFixed(2)}PHP`
+  }
+  return `<span class="book__price--normal">${originalPrice.toFixed(2)}PHP</span>${salePrice.toFixed(2)}PHP`
 }
 
 function ratingsHTML(rating) {
